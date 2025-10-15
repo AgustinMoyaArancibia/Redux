@@ -1,0 +1,385 @@
+.grid{
+  margin-right: 0 ;
+}
+
+.login-wrapper {
+  min-height: 100dvh;
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.search {
+  padding: 0 0 0 2rem;
+  margin: 0;
+}
+
+/* Altura máxima de la card */
+:root {
+  --card-max: 26rem;
+  --cartasur-blue: #003366;
+  --cartasur-red: #CC0000;
+  --cartasur-white: #FFFFFF;
+}
+
+.info-card {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  
+  height: 30rem;
+  border: 2px solid var(--cartasur-blue);
+  background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+  cursor: pointer;
+  transform-origin: center;
+  transform: translateZ(0);
+  transition: transform 160ms cubic-bezier(.2, .8, .2, 1), box-shadow 160ms ease;
+  will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+
+/* HEADER de la card */
+.info-card .header h3 {
+  color: var(--cartasur-white);
+  font-weight: 600;
+}
+
+.info-card .header small {
+  color: #94a3b8;
+}
+
+/* IMAGEN */
+.thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background-color: #0a1929;
+  display: block;
+}
+
+.thumb-wrap {
+  width: 100%;
+  height: 7rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #0d1b2a;
+  border: 1px solid var(--cartasur-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb-wrap.skeleton {
+  background: #1e3a5f;
+}
+
+.thumb-wrap.placeholder i {
+  font-size: 2rem;
+  color: #64748b;
+}
+
+/* Contenido de la card */
+.info-card .description {
+  color: #e2e8f0;
+}
+
+.info-card ul li strong {
+  color: var(--cartasur-white);
+}
+
+.info-card ul li .text-600 {
+  color: #94a3b8;
+}
+
+/* Footer */
+.info-card .footer {
+  color: #94a3b8;
+  border-top: 1px solid var(--cartasur-red);
+  padding-top: 0.75rem;
+}
+
+.scroll-area {
+  min-height: 0;
+}
+
+/* Utilidades para truncar texto */
+.line-1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.line-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+::ng-deep {
+  .p-paginator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: transparent;
+    border: none;
+  }
+}
+
+::ng-deep .menu .p-button {
+  position: relative;
+  background-color: var(--cartasur-blue);
+  border-color: var(--cartasur-blue);
+}
+
+::ng-deep .menu .p-button:hover {
+  background-color: #004080;
+  border-color: #004080;
+}
+
+::ng-deep .p-menu .p-submenu-header {
+  text-align: center;
+  background-color: var(--cartasur-blue);
+  color: var(--cartasur-white);
+}
+
+::ng-deep .p-menu {
+  background-color: #1e3a5f;
+  border: 1px solid var(--cartasur-blue);
+}
+
+::ng-deep .p-menu .p-menuitem-link {
+  color: var(--cartasur-white);
+}
+
+::ng-deep .p-menu .p-menuitem-link:hover {
+  background-color: var(--cartasur-blue);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .info-card:hover,
+  .info-card:focus-visible {
+    transform: scale(1.03);
+    box-shadow: 0 8px 24px rgba(204, 0, 0, .4), 0 0 0 2px var(--cartasur-red);
+    z-index: 2;
+    filter: brightness(1.1);
+  }
+}
+
+.info-card:active {
+  transform: scale(0.99);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-card {
+    transition: none;
+  }
+}
+
+/* velo oscuro que aparece en hover */
+.hover-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 51, 102, .6) 0%, rgba(204, 0, 0, .3) 100%);
+  opacity: 0;
+  transition: opacity 160ms ease;
+  pointer-events: none;
+}
+
+/* contenedor de botones */
+.hover-actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: .75rem;
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .info-card:hover .hover-veil,
+  .info-card:focus-within .hover-veil {
+    opacity: 1;
+  }
+
+  .info-card:hover .hover-actions,
+  .info-card:focus-within .hover-actions {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+::ng-deep .hover-actions .p-button {
+  margin: 0;
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  vertical-align: bottom;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  width: 9vw;
+  height: 6vh;
+  justify-content: space-between;
+  background-color: var(--cartasur-red);
+  border-color: var(--cartasur-red);
+  color: var(--cartasur-white);
+}
+
+::ng-deep .hover-actions .p-button:hover {
+  background-color: #a00000;
+  border-color: #a00000;
+}
+
+/* Área de items fija a 3 filas */
+.fixed-3 {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  gap: .5rem;
+  list-style: none;
+  padding-left: .5rem;
+  margin: 0;
+}
+
+.fixed-3 > li {
+  min-height: 2.25rem;
+}
+
+/* Colores del filtro de entorno (p-dropdown) */
+.env-dev .p-dropdown-label,
+.env-dev .p-dropdown { background: #0ea5e922; border-color: #0ea5e955; }
+.env-tst .p-dropdown-label,
+.env-tst .p-dropdown { background: #f59e0b22; border-color: #f59e0b55; }
+.env-prd .p-dropdown-label,
+.env-prd .p-dropdown { background: #10b98122; border-color: #10b98155; }
+.env-none .p-dropdown { background: transparent; }
+
+.env-dev .p-dropdown.p-focus { box-shadow: 0 0 0 .2rem #0ea5e93a; }
+.env-tst .p-dropdown.p-focus { box-shadow: 0 0 0 .2rem #f59e0b3a; }
+.env-prd .p-dropdown.p-focus { box-shadow: 0 0 0 .2rem #10b9813a; }
+
+.footer {
+  position: relative;
+  z-index: 3;
+}
+
+.hover-veil {
+  pointer-events: none;
+}
+
+.info-card {
+  isolation: isolate;
+}
+
+/* Divider con color CartaSur */
+:host ::ng-deep .p-divider::before {
+  border-color: var(--cartasur-red) !important;
+  border-width: 1px;
+  border-style: solid;
+}
+
+:host ::ng-deep .p-divider {
+  margin: 0.75rem 0;
+}
+
+/* Tags de environment */
+::ng-deep .p-tag {
+  font-weight: 600;
+}
+
+/* Input de búsqueda */
+::ng-deep .p-input-icon-left > input {
+  background-color: #1e3a5f;
+  border: 1px solid var(--cartasur-blue);
+  color: var(--cartasur-white);
+}
+
+::ng-deep .p-input-icon-left > input:focus {
+  border-color: var(--cartasur-red);
+  box-shadow: 0 0 0 0.2rem rgba(204, 0, 0, 0.2);
+}
+
+::ng-deep .p-input-icon-left > i {
+  color: #94a3b8;
+}
+
+/* Título principal */
+.menu h1 {
+  color: var(--cartasur-white);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ===========================
+   Paginador estilo Cartasur
+=========================== */
+::ng-deep .p-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: transparent;
+  border: none;
+  color: var(--cartasur-white);
+  gap: .25rem;
+
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last,
+  .p-paginator-page {
+    background: #0f1f33;
+    border: 1px solid var(--cartasur-blue);
+    color: var(--cartasur-white);
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    border-radius: .4rem;
+    transition: all 0.2s ease;
+
+    &:not(.p-disabled):hover {
+      border-color: #004080;
+      background: #142840;
+    }
+
+    &.p-highlight {
+      background: var(--cartasur-red);
+      border-color: var(--cartasur-red);
+      color: var(--cartasur-white);
+      font-weight: 600;
+      box-shadow: 0 0 8px rgba(204, 0, 0, 0.4);
+    }
+  }
+
+  /* Texto actual y dropdown */
+  .p-paginator-current,
+  .p-dropdown-label {
+    color: #e2e8f0;
+  }
+
+  /* selector de filas por página */
+  .p-dropdown {
+    background: #0f1f33;
+    border: 1px solid var(--cartasur-blue);
+    color: var(--cartasur-white);
+
+    &:not(.p-disabled):hover {
+      border-color: #004080;
+    }
+
+    &:not(.p-disabled).p-focus {
+      border-color: var(--cartasur-red);
+      box-shadow: 0 0 0 0.2rem rgba(204, 0, 0, 0.25);
+    }
+  }
+}

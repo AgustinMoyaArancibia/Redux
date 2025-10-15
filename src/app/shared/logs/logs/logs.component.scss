@@ -1,0 +1,244 @@
+/* =========================
+   logs.component.scss
+   Tema Cartasur (oscuro)
+========================= */
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.grid {
+  margin-right: 0;
+}
+
+.logs-card {
+  border-radius: 1rem;
+  max-width: 100%;
+  background: transparent;
+
+}
+
+@media (min-width: 768px) {
+  .logs-card {
+    padding: 1.5rem; /* padding extra en desktop */
+  }
+}
+
+/* ---------- Buscador / Inputs ---------- */
+::ng-deep .p-inputtext {
+  background-color: #0f1f33;
+
+  color: #FFFFFF;
+
+  &:enabled:hover {
+    border-color: #004080;
+  }
+  &:enabled:focus {
+    border-color: #CC0000;
+    box-shadow: 0 0 0 0.2rem rgba(204, 0, 0, 0.25);
+  }
+  &::placeholder {
+    color: #94a3b8;
+  }
+}
+
+/* Icono de búsqueda dentro de p-input-icon-left */
+::ng-deep .p-input-icon-left > i {
+  color: #94a3b8;
+}
+
+/* ---------- Botones ---------- */
+::ng-deep .p-button {
+  background-color: #003366;
+  border-color: #003366;
+  color: #FFFFFF;
+  font-weight: 600;
+
+  &:enabled:hover {
+    background-color: #004080;
+    border-color: #CC0000;
+  }
+  &:enabled:active {
+    background-color: #002244;
+    border-color: #002244;
+  }
+
+  &.p-button-secondary {
+    background-color: #475569;
+    border-color: #475569;
+
+    &:enabled:hover {
+      background-color: #334155;
+      border-color: #334155;
+    }
+  }
+
+  &.p-button-danger,
+  &.p-button-success {
+    background-color: #CC0000;
+    border-color: #CC0000;
+
+    &:enabled:hover {
+      background-color: #a00000;
+      border-color: #a00000;
+    }
+  }
+}
+
+/* ---------- Divider ---------- */
+::ng-deep .p-divider::before {
+  border-color: #CC0000 !important;
+  border-width: 2px;
+}
+
+/* ---------- Skeleton ---------- */
+::ng-deep .p-skeleton {
+  border-radius: .5rem;
+  background-color: #1e3a5f;
+}
+
+/* ---------- Tabla de Logs ---------- */
+.logs-table :where(th, td) {
+  padding: .65rem .75rem; /* más compacto */
+  vertical-align: middle;
+}
+
+::ng-deep .p-datatable.logs-table {
+  .p-datatable-header {
+    background: #0d1b2a;
+    border: 1px solid #003366;
+    color: #FFFFFF;
+  }
+
+  .p-datatable-thead > tr > th {
+    background: #0f1f33;
+    border: 1px solid #003366;
+    color: #FFFFFF;
+    font-weight: 600;
+  }
+
+  .p-datatable-tbody > tr {
+    color: #e2e8f0;
+    background: transparent;
+
+    > td {
+      border: 1px solid #003366;
+    }
+
+    &:hover {
+      background: #2d4a6f;
+    }
+  }
+
+  /* Estado loading */
+  .p-datatable-loading-overlay {
+    background: rgba(13, 27, 42, .75);
+  }
+}
+
+/* ---------- Paginador (estilo rojo Cartasur) ---------- */
+::ng-deep .p-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: transparent;
+  border: none;
+  color: #e2e8f0;
+  gap: .25rem;
+
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last,
+  .p-paginator-page {
+    background: #0f1f33;
+    border: 1px solid #003366;
+    color: #FFFFFF;
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    border-radius: .4rem;
+    transition: all 0.2s ease;
+
+    &:not(.p-disabled):hover {
+      border-color: #004080;
+      background: #142840;
+    }
+
+    &.p-highlight {
+      // background: #CC0000;
+      border-color: #CC0000;
+      color: #FFFFFF;
+      font-weight: 600;
+      box-shadow: 0 0 8px rgba(204, 0, 0, 0.4);
+    }
+  }
+
+  .p-paginator-current,
+  .p-dropdown-label {
+    color: #e2e8f0;
+  }
+
+  /* selector de rows por página */
+  .p-dropdown {
+    background: #0f1f33;
+    border: 1px solid #003366;
+
+    &:not(.p-disabled):hover {
+      border-color: #004080;
+    }
+
+    &:not(.p-disabled).p-focus {
+      border-color: #CC0000;
+      box-shadow: 0 0 0 0.2rem rgba(204, 0, 0, .25);
+    }
+  }
+}
+
+/* ---------- Toolbar de acciones (si existiera) ---------- */
+.selbar {
+  margin: .5rem 0 1rem;
+  border-radius: .75rem;
+  background: transparent;
+  border: 1px solid #003366;
+}
+
+.selbar .p-toolbar-group-left,
+.selbar .p-toolbar-group-right {
+  gap: .5rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.muted {
+  color: #94a3b8;
+}
+
+/* ---------- Compact helpers ---------- */
+.compact-input { min-height: 2.5rem; }
+.nowrap { white-space: nowrap; }
+/* ---------- Toolbar de acciones (si existiera) ---------- */
+.selbar {
+  margin: .5rem 0 1rem;
+  border-radius: .75rem;
+  background: transparent;
+  border: 1px solid #003366;
+}
+
+.selbar .p-toolbar-group-left,
+.selbar .p-toolbar-group-right {
+  gap: .5rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.muted {
+  color: #94a3b8;
+}
+
+/* ---------- Compact helpers ---------- */
+.compact-input { min-height: 2.5rem; }
+.nowrap { white-space: nowrap; }

@@ -1,0 +1,171 @@
+<!-- Error -->
+<div class="err" *ngIf="(error$ | async) as err">
+    <p class="text-danger">Ocurrió un error: {{ err }}</p>
+    <button pButton label="Cerrar" (click)="close()"></button>
+</div>
+
+<!-- Loading con SKELETON -->
+<ng-container *ngIf="(loading$ | async) && !(error$ | async)">
+    <div class="wrapper">
+        <!-- HEADER skeleton -->
+        <header class="head">
+            <div class="title w-full">
+                <p-skeleton width="50%" height="1.6rem"></p-skeleton>
+                <p-skeleton width="25%" height="1rem" class="mt-2"></p-skeleton>
+            </div>
+            <p-skeleton width="6rem" height="2rem"></p-skeleton>
+        </header>
+
+        <p-divider></p-divider>
+
+        <!-- META skeleton (PrimeFlex cols) -->
+        <section class="grid meta">
+            <div class="col-12 md:col-6 lg:col-4" *ngFor="let _ of [1,2,3]">
+                <p-skeleton width="100%" height="3.2rem" class="border-round"></p-skeleton>
+            </div>
+        </section>
+
+        <!-- HERO skeleton -->
+        <section class="hero">
+            <p-skeleton width="100%" height="18vh" class="border-round"></p-skeleton>
+        </section>
+
+        <!-- OBJETIVO skeleton -->
+        <section class="objective">
+            <p-skeleton width="30%" height="1.2rem" class="mb-2"></p-skeleton>
+            <p-skeleton width="100%" height="4.5rem"></p-skeleton>
+        </section>
+
+        <p-divider></p-divider>
+
+        <!-- DATA ITEMS skeleton (PrimeFlex cols) -->
+        <section class="dataitems">
+            <p-skeleton width="25%" height="1.2rem" class="mb-3"></p-skeleton>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-4" *ngFor="let _ of [1,2,3,4,5,6]">
+                    <p-skeleton width="100%" height="5.5rem" class="border-round"></p-skeleton>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER skeleton -->
+        <footer class="foot">
+            <p-skeleton width="6rem" height="2.5rem"></p-skeleton>
+        </footer>
+    </div>
+</ng-container>
+
+<!-- Contenido real -->
+<ng-container *ngIf="(detail$ | async) as d">
+    <div class="wrapper">
+        <!-- HEADER -->
+        <header class="head">
+            <!-- Imagen izquierda -->
+            <div class="thumb-wrap">
+                <img class="thumb" [src]="rawImgUrl(d?.id)" [alt]="d?.systemName || 'Sistema'" loading="lazy"
+                    (error)="onImgError($event)" />
+            </div>
+            <ng-template #noImg>
+                <div class="thumb-wrap placeholder">
+                    <i class="pi pi-image"></i>
+                </div>
+            </ng-template>
+            <!-- Título centrado -->
+            <div class="title">
+                <h2 class="m-0">{{ d.systemName }}</h2>
+                <small class="muted">{{ d.language || '—' }}</small>
+            </div>
+
+            <!-- Environment derecha -->
+            <p-tag [value]="d.devEnvironment" [severity]="envSeverity(d.devEnvironment)" class="env-tag"></p-tag>
+        </header>
+
+
+        <p-divider></p-divider>
+
+        <!-- META: PrimeFlex grid -->
+        <section class="grid meta">
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="meta-item">
+                    <span class="label">Gerencias:</span>
+                    <span class="value">
+                        <ng-container *ngIf="d.gerencias?.length; else noGerencias">
+                            <!-- Mostrar todas separadas por coma -->
+                            {{ d.gerencias!.join(' - ') }}
+                        </ng-container>
+                        <ng-template #noGerencias>—</ng-template>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="meta-item">
+                    <span class="label">Release:</span>
+                    <span class="value">{{ d.releaseDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="meta-item">
+                    <span class="label">Lenguaje:</span>
+                    <span class="value">{{ d.language || '—' }}</span>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- OBJETIVO -->
+        <section class="objective" *ngIf="d.objective">
+            <h4 class="m-0">Objetivo</h4>
+            <p class="m-0 line-5">{{ d.objective }}</p>
+        </section>
+
+        <p-divider *ngIf="d.dataItems?.length"></p-divider>
+
+        <!-- DATA ITEMS en grid PrimeFlex (con borde blanco) -->
+        <!-- DATA ITEMS en grid PrimeFlex (con borde blanco) -->
+        <section class="dataitems" *ngIf="d.dataItems?.length">
+            <h4 class="m-0 mb-3">Información</h4>
+
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-6" *ngFor="let di of d.dataItems; trackBy: trackByDataItem">
+                    <div class="border-round surface-card p-3 flex flex-column gap-2 shadow-1"
+                        style="border:1px solid #ffffff">
+
+                        <strong class="block">{{ di.name || '—' }}</strong>
+
+                        <!-- Chips de sectores (si hay algo para mostrar) -->
+                        <div class="flex flex-wrap gap-2" *ngIf="sectorsToDisplay(di).length">
+                            <p-tag *ngFor="let s of sectorsToDisplay(di)" [value]="s" severity="info"
+                                styleClass="px-2 py-1 text-xs">
+                            </p-tag>
+                        </div>
+
+                        <!-- Fallback: IDs crudos cuando no hay nombres (opcional) -->
+                        <small class="muted" *ngIf="!sectorsToDisplay(di).length && sectorIdsToDisplay(di).length">
+                            Sectores: {{ sectorIdsToDisplay(di).join(', ') }}
+                        </small>
+
+                        <!-- Sin sector -->
+                        <small class="muted" *ngIf="!sectorsToDisplay(di).length && !sectorIdsToDisplay(di).length">
+                            Sin sector
+                        </small>
+
+                        <!-- Descripción -->
+                        <div class="muted">{{ di.description || '—' }}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- FOOTER -->
+        <footer class="foot">
+
+            <p-button label="Cancelar" class="p-button-secondary" label="Cerrar" (click)="close()"></p-button>
+        </footer>
+    </div>
+</ng-container>

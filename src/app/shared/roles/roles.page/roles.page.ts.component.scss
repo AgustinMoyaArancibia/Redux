@@ -1,0 +1,61 @@
+.get-data {
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+    background-color: #eb2088;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: 300ms;
+
+    &:hover {
+        background-color: #860a4a;
+        cursor: pointer; 
+    }
+}
+
+.reset-data {
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+    background-color: #31031b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: 300ms;
+
+    &:hover {
+        background-color: #88114f;
+        cursor: pointer; 
+    }
+}
+
+.csur-logo {
+    display: block;
+    margin: 2rem auto; 
+    width: 120px;
+    height: auto; 
+}
+
+.button-container{
+    margin-top: 20px;
+    display: flex;;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.social-links, .gitlablink-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}

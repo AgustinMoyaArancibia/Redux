@@ -1,0 +1,181 @@
+<div class="wrapper">
+    <p-divider></p-divider>
+
+    <!-- Estado -->
+    <div class="state" *ngIf="(error$ | async) as err">
+        <p class="text-danger">Error: {{ err }}</p>
+    </div>
+
+    <!-- ========= SKELETON ========= -->
+    <ng-container *ngIf="(loading$ | async) === true && !(error$ | async); else realForm">
+        <section class="grid form-grid">
+            <div class="inf col-12 md:col-3" *ngFor="let _ of [1,2,3,4,5]">
+                <p-skeleton width="55%" height="1rem" class="mb-2"></p-skeleton>
+                <p-skeleton width="19vw" height="2.75rem"></p-skeleton>
+            </div>
+        </section>
+
+        <p-divider></p-divider>
+
+        <section class="dataitems">
+            <div class="flex justify-content-between align-items-center mb-2 p-1">
+                <p-skeleton width="8rem" height="1.2rem"></p-skeleton>
+                <p-skeleton width="8rem" height="2.5rem"></p-skeleton>
+            </div>
+
+            <div class="surface-card border-round p-3">
+                <p-skeleton width="100%" height="2rem" class="mb-2" *ngFor="let __ of [1,2,3]"></p-skeleton>
+            </div>
+        </section>
+
+        <footer class="foot">
+            <div class="flex gap-2 mb-2">
+                <p-skeleton width="16rem" height="2.5rem"></p-skeleton>
+                <p-skeleton width="8rem" height="2.5rem"></p-skeleton>
+            </div>
+            <div class="flex gap-2 mb-2">
+                <p-skeleton width="8rem" height="2.5rem"></p-skeleton>
+                <p-skeleton width="9rem" height="2.5rem"></p-skeleton>
+            </div>
+        </footer>
+    </ng-container>
+    <!-- ========= /SKELETON ========= -->
+
+    <!-- ========= FORM REAL ========= -->
+    <ng-template #realForm>
+        <div class="state" *ngIf="(loading$ | async) && !(error$ | async)">
+            <p>Cargando...</p>
+        </div>
+
+        <!-- FORM PRINCIPAL -->
+        <section class="grid form-grid">
+            <!-- Preview / Imagen actual -->
+            <div class="inf col-12 md:col-3">
+                <div class="thumb-wrap">
+                    <img [attr.src]="imgSrc()" (error)="onImgError($event)" loading="eager" decoding="async"
+                        style="max-width: 100%; border-radius: 12px" />
+                </div>
+            </div>
+
+            <!-- Selector de archivo -->
+            <div class="inf col-12 md:col-3">
+                <p-fileUpload mode="basic" [customUpload]="true" [auto]="false" [multiple]="false"
+                    [maxFileSize]="5_000_000" accept=".jpg,.jpeg,.png,.webp,.gif" chooseLabel="Cambiar imagen"
+                    chooseIcon="pi pi-upload" (onSelect)="onFileSelect($event)" (onClear)="onClearFile()">
+                </p-fileUpload>
+
+                <button pButton type="button" class="mt-2" label="Quitar imagen seleccionada" severity="secondary"
+                    (click)="onClearFile()" *ngIf="file">
+                </button>
+            </div>
+
+            <div class="inf col-12 md:col-6"></div>
+
+            <div class="inf col-12 md:col-3">
+                <label class="lbl">Lenguaje</label>
+                <input pInputText [(ngModel)]="form.language" placeholder="C#, TS, etc." />
+            </div>
+
+            <div class="inf col-12 md:col-3">
+                <label class="lbl">Fecha de lanzamiento</label>
+                <p-calendar [appendTo]="'body'" [(ngModel)]="form.releaseDate" [showIcon]="true"
+                    hourFormat="24"></p-calendar>
+            </div>
+
+            <div class="inf col-12 md:col-3">
+                <label class="lbl">Descripcion</label>
+                <input pInputText [(ngModel)]="form.description" />
+            </div>
+
+            <div class="inf col-12 md:col-3">
+                <label class="lbl">Objetivo</label>
+                <input pInputText [(ngModel)]="form.objective" />
+            </div>
+
+            <!-- Gerencias múltiples -->
+            <div class="inf col-12 md:col-6">
+                <ng-container *ngIf="(managLoading$ | async) === true; else gerMulti">
+                    <label class="lbl">Gerencias</label>
+                    <p-skeleton width="19vw" height="2.75rem"></p-skeleton>
+                    <div class="mt-2">Cargando gerencias…</div>
+                </ng-container>
+
+                <ng-template #gerMulti>
+                    <label class="lbl">Gerencias</label>
+                    <p-multiSelect [options]="(managments$ | async) ?? []" optionLabel="description" optionValue="id"
+                        [filter]="true" filterBy="description" [appendTo]="'body'" display="chip"
+                        defaultLabel="Seleccioná gerencias" [(ngModel)]="form.gerenciaIds">
+                    </p-multiSelect>
+
+                    <div class="mt-2 text-red-500" *ngIf="(managError$ | async) as e">
+                        Error: {{ e }}
+                    </div>
+                </ng-template>
+            </div>
+        </section>
+
+        <p-divider></p-divider>
+
+        <!-- DATA ITEMS -->
+        <section class="dataitems">
+            <div class="flex justify-content-between align-items-center mb-2 p-1">
+                <h4 class="m-0">Más datos</h4>
+                <p-button icon="pi pi-plus" severity="success" label="Agregar" (click)="addDataItem()"></p-button>
+            </div>
+
+            <p-table [value]="form.dataItems" [tableStyle]="{ 'min-width': '30rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nombre</th>
+                        <th style="width: 30%;"> Descripción</th>
+                        <th style="width: 40%;">Sectores </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-row let-i="rowIndex">
+                    <tr>
+                        <td>
+                            <p-dropdown [options]="dataItemsUnique" optionLabel="name" optionValue="name"
+                                [(ngModel)]="row.name" [filter]="true" filterBy="name" [appendTo]="'body'"
+                                placeholder="Repository / Owner / Critical">
+                            </p-dropdown>
+                        </td>
+
+                        <td>
+                            <textarea pInputTextarea [(ngModel)]="row.description" rows="2"></textarea>
+                        </td>
+
+                        <td>
+                            <!-- ✅ MultiSelect de sectores -->
+                            <p-multiSelect [options]="(sectors$ | async) ?? []" optionLabel="description"
+                                optionValue="id" [filter]="true" filterBy="description" [appendTo]="'body'"
+                                display="chip" defaultLabel="Elegí sectores" [(ngModel)]="row.sectorIds">
+                            </p-multiSelect>
+                        </td>
+
+                        <td class="text-right">
+                            <p-button icon="pi pi-trash" severity="danger"
+                                (click)="onDeleteDataItem(i, row)"></p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="foot">
+            <div class=" text flex gap-2 mb-2">
+                <input pInputText [(ngModel)]="newDataItemName" placeholder="Nuevo DataItem" />
+                <p-button icon="pi pi-plus" label="Agregar" (click)="addNewDataItem()"></p-button>
+            </div>
+            <div class="flex gap-2 mb-2">
+                <p-button label="Cancelar" class="p-button-secondary" (click)="cancel()"></p-button>
+                <p-button label="Guardar" severity="success" icon="pi pi-save" (click)="save()"
+                    [disabled]="saving || !isValid()" [loading]="saving">
+                </p-button>
+            </div>
+        </footer>
+    </ng-template>
+    <!-- ========= /FORM REAL ========= -->
+</div>

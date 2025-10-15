@@ -1,0 +1,270 @@
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Panel izquierdo (imagen o fondo) */
+.l {
+  background-color: #141b25;
+  height: 100%;
+  border-radius: 1rem 0 0 1rem;
+
+}
+
+/* Panel derecho (login) */
+.login-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4d525d !important;
+
+}
+
+/* Tarjeta central */
+.login-card {
+  width: 35vw;
+  height: 65vh;
+  max-height: 65vh;
+  padding: 1.25rem 1.5rem;
+}
+
+.brand {
+  color: #e9e9eb;
+  text-align: center;
+  height: 5%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+}
+
+.divi {
+  background: #141b25;
+  opacity: .6;
+}
+
+/* =========================
+   Inputs / Password / Botón
+   ========================= */
+
+/* Dimensiones uniformes */
+::ng-deep .form .p-inputtext,
+::ng-deep .form .p-password .p-inputtext,
+::ng-deep .form .p-button {
+  width: 24rem;
+  height: 3.5rem;
+  line-height: 3.5rem;
+  border-radius: .65rem;
+}
+
+/* Apariencia base de inputs */
+::ng-deep .form .p-inputtext,
+::ng-deep .form .p-password .p-inputtext {
+  background-color: #3c5a3d;
+  /* más cercano a tu card */
+  color: #e9edf3;
+  border: 1px solid rgba(255, 255, 255, .15);
+  padding: 0 1rem;
+  outline: none;
+  transition: box-shadow .15s ease, border-color .15s ease, background-color .15s ease;
+}
+
+/* Placeholder legible */
+::ng-deep .form .p-inputtext::placeholder,
+::ng-deep .form .p-password .p-inputtext::placeholder {
+  color: rgba(233, 237, 243, .6);
+}
+
+/* Focus consistente */
+::ng-deep .form .p-inputtext:focus,
+::ng-deep .form .p-password .p-inputtext:focus {
+  border-color: #9ec5ff;
+  box-shadow: 0 0 0 .2rem rgba(158, 197, 255, .15);
+  background-color: #405064;
+}
+
+/* p-password: espacio para el ícono “ojo” */
+::ng-deep .form .p-password {
+  width: 24rem;
+  /* igual que input/button */
+}
+
+::ng-deep .form .p-password .p-inputtext {
+  padding-right: 2.75rem;
+  /* deja lugar al icono */
+}
+
+/* Ajuste de icono del ojo */
+::ng-deep .form .p-password .p-password-toggle-mask,
+::ng-deep .form .p-password .p-icon {
+  right: .75rem !important;
+  color: rgba(233, 237, 243, .85);
+}
+
+/* Botón */
+::ng-deep .form .p-button {
+  background: #a6b4c7;
+  color: #111827;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, .1);
+  transition: transform .08s ease, box-shadow .15s ease;
+}
+
+::ng-deep .form .p-button:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+
+::ng-deep .form .p-button:active {
+  transform: translateY(1px);
+}
+
+/* Autofill (Chrome/Edge) */
+::ng-deep input:-webkit-autofill,
+::ng-deep input:-webkit-autofill:focus,
+::ng-deep .p-password input:-webkit-autofill {
+  -webkit-text-fill-color: #e9edf3;
+  transition: background-color 5000s ease-in-out 0s;
+  /* evita amarillo */
+  box-shadow: 0 0 0px 1000px #405064 inset;
+  border: 1px solid rgba(255, 255, 255, .15);
+}
+
+/* ===============================
+   🧩 Responsividad hasta tablet
+   =============================== */
+
+@media (max-width: 1024px) {
+  .login-card {
+    width: 60vw;
+    height: auto;
+  }
+
+  ::ng-deep .form .p-inputtext,
+  ::ng-deep .form .p-password,
+  ::ng-deep .form .p-button {
+    width: 20rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+  .l {
+    display: none;
+    /* Oculta el panel izquierdo */
+  }
+
+  .login-container {
+    width: 90%;
+    border-radius: 1rem;
+    border: 1px solid wheat;
+    background-color: #4d525d !important;
+  }
+
+  .login-card {
+    width: 100%;
+    height: auto;
+    padding: 2rem 1rem;
+  }
+
+  ::ng-deep .form .p-password,
+  ::ng-deep .form .p-inputtext,
+  ::ng-deep .form .p-button {
+ 
+  }
+}
+
+
+:host ::ng-deep .p-divider::before {
+  border-color: #ff0000 !important;
+  border: 1px solid;
+}
+
+.login-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent; /* 👈 fondo transparente total */
+  padding: 2rem;
+  
+  .hero-img {
+    max-width: 100%;
+    height: auto;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.login-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background: transparent;
+
+  /* 📸 logos decorativos dentro del container */
+  .corner {
+    position: absolute;
+    width: 180px; /* 🔧 mismo tamaño para ambos */
+    height: auto;
+    opacity: 0.15; /* 💧 hace el logo translúcido */
+    pointer-events: none;
+    user-select: none;
+    z-index: 0; /* detrás del card */
+    
+  }
+
+  .corner-tl {
+    top: 0;
+    left: 0;
+  }
+
+  .corner-br {
+    bottom: 0;
+    right: 0;
+  }
+
+  /* 🔝 asegurar que el contenido esté por encima */
+  .login-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+
+    
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+  }
+}
+
+/* 📱 responsive: ajustar tamaño en pantallas chicas */
+@media (max-width: 768px) {
+  .login-container .corner {
+    width: 120px;
+    opacity: 0.1;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container .corner {
+    display: none;
+  }
+}

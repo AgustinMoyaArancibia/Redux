@@ -1,0 +1,41 @@
+<div class="grid login-wrapper flex">
+
+  <!-- Panel izquierdo con imagen -->
+  <div class="col-12 md:col-6 login-image">
+    <img src="../login/../../../../assets/portada.png" alt="Logo o portada" class="hero-img" />
+  </div>
+
+  <!-- Panel derecho con formulario -->
+  <div class="col-12 md:col-6 login-container">
+
+    <img src="./../../../../assets/izquierda.png" alt="" class="corner corner-tl" aria-hidden="true" />
+    <img src="./../../../../assets/derecha.png" alt="" class="corner corner-br" aria-hidden="true" />
+    <div class="login-card">
+      <div class="brand">
+        <h1>Iniciar Sesión</h1>
+      </div>
+
+      <p-toast position="bottom-right"></p-toast>
+      <p-divider class="divi"></p-divider>
+
+      <form (ngSubmit)="submit()" class="form">
+        <input pInputText type="email" [(ngModel)]="userName" name="userName" placeholder="Usuario" required
+          autocomplete="username" />
+
+        <p-password [(ngModel)]="password" name="password" [feedback]="false" placeholder="Contraseña"
+          [toggleMask]="true" required autocomplete="current-password"></p-password>
+
+        <!-- asegura submit con Enter incluso dentro de p-password -->
+        <input type="submit" hidden />
+
+        <p-button type="submit" label="Ingresar" severity="secondary"
+          [disabled]="isSubmitting || ((loading$ | async) ?? false)">
+        </p-button>
+
+      </form>
+
+
+
+    </div>
+  </div>
+</div>
